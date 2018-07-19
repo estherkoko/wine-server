@@ -2,6 +2,9 @@
 const express = require ('express');
 var router=express.Router();
 
+//import objectid from mongoose which will be later used to check if id is valid
+var ObjectId = require('mongoose').Types.ObjectId;
+
 //require statement for wine model
 var { wine } = require('../models/wines');
 
@@ -13,6 +16,20 @@ router.get('/', (req, res) => {
         else {console.log('Error in Retrieving Wines : ' + JSON.stringify(err, undefined, 2));}
     });
 });
+
+//create get request for id to pull corresponding wine record
+router.get('/:id', (req, res) => {
+
+    //check if id is valid - if not send 400 status code
+        if (!ObjectId.isValid(req.params.id)) 
+            return res.status(400).send(`No record found for given id : ${req.params.id}`);
+
+        wine.findById(req.params.id, (err, doc) => {
+            if (!err) {res.send(doc);}
+            else {console.log('Error in Retrieving Wines : ' + JSON.stringify(err, undefined, 2));}
+            });
+        });
+    
 
 //post request 
 router.post('/', (req, res) => {
