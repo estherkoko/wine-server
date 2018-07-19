@@ -10,7 +10,7 @@ var { wine } = require('../models/wines');
 router.get('/', (req, res) => {
     wine.find((err, docs) => {
         if (!err) {res.send(docs);}
-        else {console.log('Error in Retrieving Employees : ' + JSON.stringify(err, undefined, 2));}
+        else {console.log('Error in Retrieving Wines : ' + JSON.stringify(err, undefined, 2));}
     });
 });
 
@@ -23,8 +23,14 @@ router.post('/', (req, res) => {
         typeOfWine: req.body.typeOfWine,
         size : req.body.size,
         price :req.body.price,
-    })
-})
+    });
+    //insert new record into mongo database using the save object
+    myWine.save((err, doc)=> {
+        if (!err) {res.send(doc);}
+        else {console.log('Error in Wine Save : ' + JSON.stringify(err, undefined, 2));}
+
+    });
+});
 
 
 //export the router object
