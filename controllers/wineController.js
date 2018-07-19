@@ -49,6 +49,21 @@ router.post('/', (req, res) => {
     });
 });
 
+//create update operation using the put method to send json data containing new details of a wine
+router.put('/:id', (req, res)=> {
+    if(!ObjectId.isValid(req.params.id))
+        return res.status(400).send(`No records with given id : ${req.params.id}`);
+
+        //create object 
+        var myWine = {
+            name: req.body.name,
+            description: req.body.description,
+            typeOfWine: req.body.typeOfWine,
+            size : req.body.size,
+            price :req.body.price,
+        };
+        myWine.findByIdAndUpdate(req.params.id, {$set: emp}, {new : true }, (err, doc) => {});
+});
 
 //export the router object
 module.exports=router;
