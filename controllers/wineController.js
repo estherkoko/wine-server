@@ -75,7 +75,7 @@ router.delete('/:id', (req, res)=> {
     if(!ObjectId.isValid(req.params.id))
         return res.status(400).send(`No records with given id you're trying to delete: ${req.params.id}`);
        
-        wine.findByIdAndRemove((err, doc)=> {
+        wine.findByIdAndRemove(req.params.id, (err, doc) => {
             if (!err) {res.send(doc);}
             else {console.log('Error in Wine Delete : ' + JSON.stringify(err, undefined, 2));}
     
