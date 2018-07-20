@@ -64,7 +64,7 @@ router.put('/:id', (req, res)=> {
         };
         //pass object with options and call back function with err, doc. 
         //new: true test mongodb whether we want to return all data of wine or just the updated data back to the response
-        myWine.findByIdAndUpdate(req.params.id, {$set: emp}, {new : true }, (err, doc) => {
+        wine.findByIdAndUpdate(req.params.id, {$set: myWine}, {new : true }, (err, doc) => {
             if (!err) {res.send(doc);}
             else {console.log('Error in Wine Update : ' + JSON.stringify(err, undefined, 2));}
         });
@@ -75,7 +75,7 @@ router.delete('/:id', (req, res)=> {
     if(!ObjectId.isValid(req.params.id))
         return res.status(400).send(`No records with given id you're trying to delete: ${req.params.id}`);
        
-        myWine.findByIdAndRemove((err, doc)=> {
+        wine.findByIdAndRemove((err, doc)=> {
             if (!err) {res.send(doc);}
             else {console.log('Error in Wine Delete : ' + JSON.stringify(err, undefined, 2));}
     
